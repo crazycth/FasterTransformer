@@ -1016,7 +1016,8 @@ void cublasMMWrapper::_Int8Gemm(const int     m,
     auto pointer_mode = CUBLASLT_POINTER_MODE_HOST;
     if (mode == 0) {
         pointer_mode =
-            per_column_scaling ? CUBLASLT_POINTER_MODE_ALPHA_DEVICE_VECTOR_BETA_HOST : CUBLASLT_POINTER_MODE_DEVICE;
+            // per_column_scaling ? CUBLASLT_POINTER_MODE_ALPHA_DEVICE_VECTOR_BETA_HOST : CUBLASLT_POINTER_MODE_DEVICE;
+             per_column_scaling ? CUBLASLT_POINTER_MODE_ALPHA_DEVICE_VECTOR_BETA_ZERO : CUBLASLT_POINTER_MODE_DEVICE;
     }
     check_cuda_error(
         cublasLtMatmulDescSetAttribute(operationDesc, CUBLASLT_MATMUL_DESC_TRANSA, &op_a, sizeof(cublasOperation_t)));

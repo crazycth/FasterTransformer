@@ -521,10 +521,15 @@ class GPT(nn.Module):
                                   inter_size=inter_size)
 
         # Prepare for tensor/pipeline parallel
-        try:
-            dist.init_process_group(backend='mpi')
-        except:
-            print("[INFO] WARNING: Have initialized the process group")
+        # try:
+        #     dist.init_process_group(backend='mpi')
+        # except:
+        #     print("[INFO] WARNING: Have initialized the process group")
+        os.environ["RANK"] = '0'
+        os.environ["WORLD_SIZE"] = '1'
+        os.environ["MASTER_ADDR"] = '127.0.0.1'
+        os.environ['MASTER_PORT'] = '29500'
+        dist.init_process_group(backend='nccl')
         self.rank = dist.get_rank()
         self.device_count = torch.cuda.device_count()
         self.device = self.rank % self.device_count

@@ -450,7 +450,7 @@ class GPT(nn.Module):
                  inter_size: int = 0,
                  # gpt_variant_params
                  layernorm_eps: float = 1e-6,
-                 layernorm_type: typing.Literal['pre_layernorm', 'post_layernorm'] = "pre_layernorm",
+                 layernorm_type: str = "pre_layernorm",
                  activation_type: str = "Gelu",
                  gpt_with_moe: bool = False,
                  expert_num: int = 0,
@@ -667,7 +667,7 @@ class GptInitModelParameters:
     sparse: int
     # GPT variant params.
     layernorm_eps: float = 1e-6
-    layernorm_type: typing.Literal['pre_layernorm', 'post_layernorm'] = 'pre_layernorm'
+    layernorm_type: str = 'pre_layernorm'
     activation_type: str = 'gelu'
     has_positional_encoding: bool = True
     has_pre_decoder_layernorm: bool = False

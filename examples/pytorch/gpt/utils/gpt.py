@@ -23,6 +23,8 @@ import torch
 import torch.distributed as dist
 import torch.nn as nn
 
+import logging
+
 str_type_map = {"fp32": torch.float32, "fp16": torch.float16, "bf16": torch.bfloat16}
 
 
@@ -529,7 +531,7 @@ class GPT(nn.Module):
         os.environ["WORLD_SIZE"] = '1'
         os.environ["MASTER_ADDR"] = '127.0.0.1'
         os.environ['MASTER_PORT'] = os.environ.get("PORT1",'27111')
-        print(f"address:{os.environ['MASTER_ADDR']}, port:{os.environ['MASTER_PORT']}")
+        logging.info(f"address:{os.environ['MASTER_ADDR']}, port:{os.environ['MASTER_PORT']}")
         dist.init_process_group(backend='nccl')
         self.rank = dist.get_rank()
         self.device_count = torch.cuda.device_count()

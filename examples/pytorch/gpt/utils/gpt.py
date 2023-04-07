@@ -528,7 +528,7 @@ class GPT(nn.Module):
         os.environ["RANK"] = '0'
         os.environ["WORLD_SIZE"] = '1'
         os.environ["MASTER_ADDR"] = '127.0.0.1'
-        os.environ['MASTER_PORT'] = '29500'
+        os.environ['MASTER_PORT'] = '27123'
         dist.init_process_group(backend='nccl')
         self.rank = dist.get_rank()
         self.device_count = torch.cuda.device_count()

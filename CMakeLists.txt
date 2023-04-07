@@ -14,7 +14,7 @@
 cmake_minimum_required(VERSION 3.8 FATAL_ERROR) # for PyTorch extensions, version should be greater than 3.13
 project(FasterTransformer LANGUAGES CXX CUDA)
 
-find_package(CUDA 10.2 REQUIRED)
+find_package(CUDA 11.1 REQUIRED)
 
 if(${CUDA_VERSION_MAJOR} VERSION_GREATER_EQUAL "11")
   add_definitions("-DENABLE_BF16")

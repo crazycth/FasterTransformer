@@ -527,12 +527,19 @@ class GPT(nn.Module):
         #     dist.init_process_group(backend='mpi')
         # except:
         #     print("[INFO] WARNING: Have initialized the process group")
+
         os.environ["RANK"] = '0'
         os.environ["WORLD_SIZE"] = '1'
         os.environ["MASTER_ADDR"] = '127.0.0.1'
-        os.environ['MASTER_PORT'] = os.environ.get("PORT1",'27111')
-        logging.info(f"address:{os.environ['MASTER_ADDR']}, port:{os.environ['MASTER_PORT']}")
-        dist.init_process_group(backend='nccl')
+        try:
+            os.environ['MASTER_PORT'] = os.environ.get("PORT1",'27111')
+            logging.info(f"address:{os.environ['MASTER_ADDR']}, port:{os.environ['MASTER_PORT']}")
+            dist.init_process_group(backend='nccl')
+        except:
+            os.environ['MASTER_PORT'] = os.environ.get("PORT2",'27111')
+            logging.info(f"address:{os.environ['MASTER_ADDR']}, port:{os.environ['MASTER_PORT']}")
+            dist.init_process_group(backend='nccl')
+
         self.rank = dist.get_rank()
         self.device_count = torch.cuda.device_count()
         self.device = self.rank % self.device_count
